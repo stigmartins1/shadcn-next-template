@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "Smart Places Toolkit",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Designed to give you statistics, insights and tools to manage your land plots.",
   mainNav: [
     {
       title: "Home",
@@ -11,6 +11,8 @@ export const siteConfig = {
     },
   ],
   links: {
+    smartplaces: "https://smart-places.io",
+    signup: "/signup",
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn/ui",
     docs: "https://ui.shadcn.com",
