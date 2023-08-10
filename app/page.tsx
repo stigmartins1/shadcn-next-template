@@ -31,9 +31,9 @@ export default function IndexPage() {
           <p className="mt-4">
             Now, picture yourself at the forefront of this digital frontier,
             equipped with tools that illuminate the virtual landscape in ways
-            you've never thought possible. That's exactly what Smart Places
-            Toolkit offers – a comprehensive platform to explore, analyze, and
-            manage these digital plots. 🌍🔍
+            you&apos;ve never thought possible. That&apos;s exactly what Smart
+            Places Toolkit offers – a comprehensive platform to explore,
+            analyze, and manage these digital plots. 🌍🔍
           </p>
         </div>
         <h2 className="text-2xl font-bold mt-8 md:text-3xl">
@@ -44,7 +44,7 @@ export default function IndexPage() {
             Stay ahead of the curve with our real-time statistics. Discover how
             many land plots have been minted in the past hour, day, week, month,
             3 months, 6 months, and year - both globally and tailored to your
-            interests. Whether you're an investor, enthusiast, or curious
+            interests. Whether you&apos;re an investor, enthusiast, or curious
             explorer, Smart Places Toolkit empowers you with up-to-the-minute
             insights that keep you informed.
           </p>
@@ -70,7 +70,7 @@ export default function IndexPage() {
             plot? Smart Places Toolkit seamlessly integrates with the Google
             Maps API to paint a vivid picture of each hexagonal wonder. Immerse
             yourself in photos, reviews, and points of interest, right from the
-            comfort of your screen. Whether you're planning an adventure or
+            comfort of your screen. Whether you&apos;re planning an adventure or
             satisfying your curiosity, Smart Places Toolkit has you covered.
           </p>
         </div>
@@ -90,8 +90,8 @@ export default function IndexPage() {
         </h2>
         <div className="max-w-[700px] text-lg text-muted-foreground">
           <p className="mt-4">
-            Smart Places Toolkit doesn't stop at insights – it's also your
-            AI-powered assistant for managing land plot descriptions and
+            Smart Places Toolkit doesn&apos;t stop at insights - it&apos;s also
+            your AI-powered assistant for managing land plot descriptions and
             activities. Watch as the app transforms raw data into compelling
             narratives, showcasing the stories behind each digital gem. Immerse
             yourself in the virtual culture and community thriving on these
@@ -100,10 +100,10 @@ export default function IndexPage() {
         </div>
         <div className="max-w-[700px] text-lg text-muted-foreground">
           <p className="mt-4">
-            Smart Places Toolkit isn't just an app; it's a portal to a dynamic,
-            ever-evolving world. Are you ready to unravel the mysteries of the
-            blockchain-based landscape? Join us on Smart Places Toolkit and
-            embark on a journey that blends technology, exploration, and
+            Smart Places Toolkit isn&apos;t just an app; it&apos;s a portal to a
+            dynamic, ever-evolving world. Are you ready to unravel the mysteries
+            of the blockchain-based landscape? Join us on Smart Places Toolkit
+            and embark on a journey that blends technology, exploration, and
             community like never before.
           </p>
         </div>
