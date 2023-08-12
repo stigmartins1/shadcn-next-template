@@ -26,7 +26,7 @@ export default function IndexPage() {
         <div className="max-w-[700px] text-lg text-muted-foreground">
           <p className="mt-4">
             Imagine a world where hexagonal plots of digital land span the
-            globe, each one a unique gem, minted on the Cardano blockchain.
+            globe, each one a unique gem minted on the Cardano blockchain.
           </p>
           <p className="mt-4">
             Now, picture yourself at the forefront of this digital frontier,
@@ -36,7 +36,7 @@ export default function IndexPage() {
             analyze, and manage these digital plots. 🌍🔍
           </p>
         </div>
-        <h2 className="text-2xl font-bold mt-8 md:text-3xl">
+        <h2 className="mt-8 text-2xl font-bold  md:text-3xl">
           📊 Real-time Insights at Your Fingertips
         </h2>
         <div className="max-w-[700px] text-lg text-muted-foreground">
@@ -49,7 +49,7 @@ export default function IndexPage() {
             insights that keep you informed.
           </p>
         </div>
-        <h2 className="text-2xl font-bold mt-8 md:text-3xl">
+        <h2 className="mt-8 text-2xl font-bold  md:text-3xl">
           🌎 Dive into Global Diversity
         </h2>
         <div className="max-w-[700px] text-lg text-muted-foreground">
@@ -61,7 +61,7 @@ export default function IndexPage() {
             this digital tapestry and witness the creativity of the community.
           </p>
         </div>
-        <h2 className="text-2xl font-bold mt-8 md:text-3xl">
+        <h2 className="mt-8 text-2xl font-bold  md:text-3xl">
           🗺️ Connect with Coordinates
         </h2>
         <div className="max-w-[700px] text-lg text-muted-foreground">
@@ -74,7 +74,7 @@ export default function IndexPage() {
             satisfying your curiosity, Smart Places Toolkit has you covered.
           </p>
         </div>
-        <h2 className="text-2xl font-bold mt-8 md:text-3xl">
+        <h2 className="mt-8 text-2xl font-bold  md:text-3xl">
           🚀 Personalized Insights Await:
         </h2>
         <div className="max-w-[700px] text-lg text-muted-foreground">
@@ -85,7 +85,7 @@ export default function IndexPage() {
             and explore your influence on the digital world.
           </p>
         </div>
-        <h2 className="text-2xl font-bold mt-8 md:text-3xl">
+        <h2 className="mt-8 text-2xl font-bold  md:text-3xl">
           🧠 AI-Powered Management
         </h2>
         <div className="max-w-[700px] text-lg text-muted-foreground">
