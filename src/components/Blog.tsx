@@ -9,7 +9,7 @@ const Blog: React.FC<Props> = ({ blur = false }) => {
     <span className={blur ? "blur-md" : undefined}>
       <svg
         viewBox="0 0 200 200"
-        className="w-full h-auto"
+        className="h-auto w-full"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

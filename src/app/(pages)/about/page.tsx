@@ -8,8 +8,6 @@ export default function IndexPage() {
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="flex max-w-[980px] flex-col items-start gap-2">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-          {/* Unlock the Virtual World with our Toolkit:
-          <br className="hidden sm:inline" />
           Your Ultimate Destination for{" "}
           <span className="text-blue-500">
             <Link
@@ -19,9 +17,9 @@ export default function IndexPage() {
             >
               Smart Places
             </Link>
-          </span>{" "}
-          Land Plot Insights! */}
-          Welcome to <span className="text-blue-500">Smart Places Toolkit</span>
+          </span>
+          <br className="hidden sm:inline" />
+          Land Plot Insights!
         </h1>
         <div className="max-w-[700px] text-lg text-muted-foreground">
           <p className="mt-4">
@@ -33,7 +31,8 @@ export default function IndexPage() {
             equipped with tools that illuminate the virtual landscape in ways
             you&apos;ve never thought possible. That&apos;s exactly what Smart
             Places Toolkit offers – a comprehensive platform to explore,
-            analyze, and manage these digital plots. 🌍🔍
+            analyze, and manage these digital plots and their real world
+            counterparts. 🌍🔍
           </p>
         </div>
         <h2 className="mt-8 text-2xl font-bold  md:text-3xl">

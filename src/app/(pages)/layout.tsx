@@ -23,22 +23,22 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
       {!loader && (
         <>
           <div className="text-primary">
-            <div className="fixed -z-[1] left-1/3 w-12 top-2/3 blur-2xl">
+            <div className="fixed left-1/3 top-2/3 z-[-1] w-12 blur-2xl">
               <Blog blur />
             </div>
-            <div className="fixed -z-[1] left-2/3 w-12 top-1/3 blur-2xl">
+            <div className="fixed left-2/3 top-1/3 z-[-1] w-12 blur-2xl">
               <Blog blur />
             </div>
-            <div className="fixed -z-[1] left-1/4 w-40 top-1/4 blur-2xl opacity-50">
+            <div className="fixed left-1/4 top-1/4 z-[-1] w-40 opacity-50 blur-2xl">
               <Blog blur />
             </div>
-            <div className="fixed -z-[1] left-1/2 w-32 top-1/2 blur-2xl opacity-60">
+            <div className="fixed left-1/2 top-1/2 z-[-1] w-32 opacity-60 blur-2xl">
               <Blog blur />
             </div>
-            <div className="fixed -z-[1] left-[45%] w-12 top-1/3 blur-2xl">
+            <div className="fixed left-[45%] top-1/3 z-[-1] w-12 blur-2xl">
               <Blog blur />
             </div>
-            <div className="fixed -z-[1] left-3/4 w-60 top-1/3 opacity-20 blur-2xl">
+            <div className="fixed left-3/4 top-1/3 z-[-1] w-60 opacity-20 blur-2xl">
               <Blog blur />
             </div>
           </div>

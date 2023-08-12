@@ -1,37 +1,63 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
+import Link from "next/link"
 import useAuth from "@/context/useAuth"
 
+import { siteConfig } from "@/config/site"
 import Login from "@/components/Login"
 import ProfileCard from "@/components/ProfileCard"
 
 const Home = () => {
   const { authStatus } = useAuth()
   return (
-    <div className="w-full max-w-7xl mx-auto px-8">
-      <div className="flex flex-wrap -mx-2 mt-32 gap-y-8">
-        <div className="w-full sm:w-1/2 px-2 flex justify-center flex-wrap items-center">
-          <div className="relative text-center w-full flex justify-center flex-wrap">
-            <div className="w-full max-w-[100px]">
-              <img src="/favicon.ico" alt="Logo" />
-            </div>
+    <div className="mx-auto w-full max-w-7xl px-8">
+      <div className="-mx-2 mt-32 flex flex-wrap gap-y-8">
+        <div className="flex w-full flex-wrap items-center justify-center px-2 sm:w-1/2">
+          <div className="relative flex w-full flex-wrap justify-center">
+            {/* <div className="w-full max-w-[100px]">
+              <Image src="/favicon.ico" alt="Logo" width={800} height={1347} />
+            </div> */}
             <div className="w-full">
-              <h1 className="font-bold text-3xl mb-4">
-                NextJS 13 Authentication with{" "}
-                <span className="text-primary">Appwrite</span>
+              <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
+                Welcome to{" "}
+                <span className="text-blue-500">Smart Places Toolkit</span>
               </h1>
-              <p className="text-white/60">
-                Integrate secure user authentication into your Next.js web
-                applications using Appwrite, an open-source backend server.
-                Follow along as we demonstrate the step-by-step process of
-                setting up and implementing authentication functionality,
-                ensuring the highest level of security for your users.
-              </p>
+              <div className="text-muted-foreground">
+                <p className="my-6">
+                  This project is an independent endeavor with the goal of
+                  offering tools to assist you as a land plot owner manage your
+                  plots, acquire valuable insights and statistics regarding
+                  activities within the{" "}
+                  <Link
+                    className="hover:underline"
+                    href={siteConfig.links.smartplaces}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Smart Places
+                  </Link>{" "}
+                  social app ecosystem, and much more.
+                </p>
+                <Link
+                  className="hover:underline"
+                  href={siteConfig.links.smartplacesmap}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    src="/images/SP_mapsite.webp"
+                    alt="Smart Places land plots map"
+                    width={1920 / 3}
+                    height={890 / 3}
+                  />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <div className="w-full sm:w-1/2 px-2 flex flex-wrap justify-end">
+        <div className="flex w-full flex-wrap justify-end px-2 sm:w-1/2">
           {authStatus ? (
             <div className="max-w-md">
               <ProfileCard />

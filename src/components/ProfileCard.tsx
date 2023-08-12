@@ -22,21 +22,21 @@ const ProfileCard = () => {
   return (
     user && (
       <>
-        <div className="flex gap-y-6 flex-wrap">
-          <div className="flex w-full gap-x-4 items-center">
-            <div className="shrink-0 w-20">
+        <div className="flex flex-wrap gap-y-6">
+          <div className="flex w-full items-center gap-x-4">
+            <div className="w-20 shrink-0">
               <Avatar img="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
             </div>
             <div className="relative">
-              <p className="font-bold text-xl w-full mb-1">{user.name}</p>
-              <div className="text-[12px] p-0.5 inline-block rounded-md bg-gradient-to-tr from-primary to-secondary">
-                <button className="px-2 rounded-md font-bold bg-white text-black">
+              <p className="mb-1 w-full text-xl font-bold">{user.name}</p>
+              <div className="inline-block rounded-md bg-destructive p-0.5 text-[12px] ">
+                <button className="rounded-md px-2 font-bold text-muted-foreground">
                   FREE
                 </button>
               </div>
             </div>
           </div>
-          <div className="bg-gray-200/70 rounded-xl px-8 py-8 w-full flex gap-y-4 flex-wrap">
+          <div className="flex w-full flex-wrap gap-y-4 rounded-xl bg-gray-200/70 p-8">
             <div className="relative w-full">
               <p className="text-sm text-gray-700">Display Name</p>
               <p className="font-semibold">{user.name}</p>
@@ -54,10 +54,10 @@ const ProfileCard = () => {
               <p className="font-semibold">********</p>
             </div>
           </div>
-          <div className="w-full flex justify-center">
+          <div className="flex w-full justify-center">
             <Link
               href={"/logout"}
-              className="bg-gray-200/70 rounded-xl px-6 py-3 inline-block hover:bg-gray-100 duration-150"
+              className="inline-block rounded-xl bg-gray-200/70 px-6 py-3 duration-150 hover:bg-gray-100"
             >
               Logout
             </Link>

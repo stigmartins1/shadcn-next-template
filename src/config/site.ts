@@ -13,6 +13,7 @@ export const siteConfig = {
   ],
   links: {
     smartplaces: "https://smart-places.io",
+    smartplacesmap: "https://map.smart-places.io",
     signup: "/signup",
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn/ui",

@@ -29,8 +29,8 @@ const Login = () => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full">
-      <div className={`mx-auto w-full max-w-lg bg-gray-200/50 rounded-xl p-10`}>
+    <div className="flex w-full items-center justify-center">
+      <div className="mx-auto w-full max-w-lg rounded-xl bg-gray-200/50 p-10">
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[60px]">
             <img src="/favicon.ico" alt="Logo" />
@@ -40,7 +40,7 @@ const Login = () => {
           Sign in to your account
         </h2>
         <p className="mt-2 text-center text-base text-gray-600">
-          Don&apos;t have any account?&nbsp;
+          Don&apos;t have an account yet?&nbsp;
           <Link
             href="/signup"
             className="font-medium text-primary transition-all duration-200 hover:underline"
@@ -48,7 +48,7 @@ const Login = () => {
             Sign Up
           </Link>
         </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+        {error && <p className="mt-8 text-center text-red-600">{error}</p>}
         <form onSubmit={login} className="mt-8">
           <div className="space-y-5">
             <div>
@@ -101,7 +101,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="inline-flex w-full items-center justify-center rounded-md bg-primary px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-primary/80"
+                className="inline-flex w-full items-center justify-center rounded-md bg-purple-700 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-purple-700/70"
               >
                 Sign in
               </button>

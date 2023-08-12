@@ -32,7 +32,7 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className={`mx-auto w-full max-w-lg bg-gray-200/50 rounded-xl p-10`}>
+      <div className="mx-auto w-full max-w-lg rounded-xl bg-gray-200/50 p-10">
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[60px]">
             <img src="/favicon.ico" alt="Logo" />
@@ -50,7 +50,7 @@ const Signup = () => {
             Sign In
           </Link>
         </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+        {error && <p className="mt-8 text-center text-red-600">{error}</p>}
         <form onSubmit={create} className="mt-8">
           <div className="space-y-5">
             <div>
