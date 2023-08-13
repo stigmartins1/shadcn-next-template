@@ -3,6 +3,7 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import useAuth from "@/context/useAuth"
 
 import { siteConfig } from "@/config/site"
@@ -11,6 +12,12 @@ import ProfileCard from "@/components/ProfileCard"
 
 const Home = () => {
   const { authStatus } = useAuth()
+  const router = useRouter()
+
+  if (authStatus) {
+    router.replace("/dashboard")
+    return <></>
+  }
   return (
     <div className="mx-auto w-full max-w-7xl px-8">
       <div className="-mx-2 mt-32 flex flex-wrap gap-y-8">

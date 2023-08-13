@@ -42,7 +42,7 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
               <Blog blur />
             </div>
           </div>
-          <Header />
+          {/* <Header /> */}
           <main className="px-2 py-4">{children}</main>
         </>
       )}

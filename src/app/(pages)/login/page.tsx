@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import useAuth from "@/context/useAuth"
 
@@ -10,10 +10,11 @@ const LoginPage = () => {
   const router = useRouter()
   const { authStatus } = useAuth()
 
-  if (authStatus) {
-    router.replace("/profile")
-    return <></>
-  }
+  useEffect(() => {
+    if (authStatus) {
+      router.push("/dashboard")
+    }
+  })
 
   return (
     <section className="px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">

@@ -12,7 +12,7 @@ const DashboardPage = () => {
             &lt;
           </span>
         </Link>
-        <span className="text-3xl font-bold">My Account</span>
+        <span className="text-3xl font-bold">Dashboard</span>
       </h1>
       <ProfileCard />
     </div>

@@ -1,29 +1,81 @@
 "use client"
 
-import React, { FormEvent, useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import React, { useState } from "react"
 import appwriteService from "@/appwrite/config"
 import useAuth from "@/context/useAuth"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+const minUserNameLength = 2
+const maxUserNameLength = 30
+const minPasswordLength = 5
+const maxPasswordLength = 30
+
+const formSchema = z
+  .object({
+    username: z
+      .string()
+      .min(minUserNameLength, {
+        message: `Username must be at least ${minUserNameLength} characters`,
+      })
+      .max(maxUserNameLength, {
+        message: `Username can't be more than ${maxPasswordLength} characters`,
+      }),
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(minPasswordLength, {
+        message: `Password must be at least ${minPasswordLength} characters`,
+      })
+      .max(maxPasswordLength, {
+        message: `Password can't be more than ${maxPasswordLength} characters`,
+      }),
+    confirm: z.string(),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "Passwords don't match",
+    path: ["confirm"], // path of error
+  })
 
 const Signup = () => {
-  const router = useRouter()
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-  })
   const [error, setError] = useState("")
-
+  const [showPassword, setShowPassword] = useState(false)
   const { setAuthStatus } = useAuth()
 
-  const create = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirm: "",
+    },
+  })
+
+  // 2. Define a submit handler.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    /* console.log(values) */
     try {
-      const userData = await appwriteService.createUserAccount(formData)
+      const userData = await appwriteService.createUserAccount(values)
       if (userData) {
+        console.log("userData", userData)
         setAuthStatus(true)
-        router.push("/profile")
       }
     } catch (error: any) {
       setError(error.message)
@@ -31,108 +83,83 @@ const Signup = () => {
   }
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="mx-auto w-full max-w-lg rounded-xl bg-gray-200/50 p-10">
-        <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-[60px]">
-            <img src="/favicon.ico" alt="Logo" />
-          </span>
-        </div>
-        <h2 className="text-center text-2xl font-bold leading-tight text-black">
-          Sign up to create account
-        </h2>
-        <p className="mt-2 text-center text-base text-gray-600">
-          Already have an account?&nbsp;
-          <Link
-            href="/login"
-            className="font-medium text-primary transition-all duration-200 hover:underline"
-          >
-            Sign In
-          </Link>
-        </p>
-        {error && <p className="mt-8 text-center text-red-600">{error}</p>}
-        <form onSubmit={create} className="mt-8">
-          <div className="space-y-5">
-            <div>
-              <label
-                htmlFor="name"
-                className="text-base font-medium text-gray-900"
-              >
-                Full Name
-              </label>
-              <div className="mt-2">
-                <input
-                  className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                  type="text"
-                  placeholder="Full Name"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="text-base font-medium text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, email: e.target.value }))
-                  }
-                  placeholder="Email"
-                  id="email"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="text-base font-medium text-gray-900"
-                >
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="m-2 space-y-8 p-2"
+      >
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Displayname</FormLabel>
+              <FormControl>
+                <Input placeholder="Choose a displayname" {...field} />
+              </FormControl>
+              <FormDescription>This is your public displayname</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your email" {...field} />
+              </FormControl>
+              <FormDescription>
+                Enter the email you want to sign up with
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
                   type="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      password: e.target.value,
-                    }))
-                  }
-                  id="password"
-                  required
+                  placeholder="Choose a password"
+                  {...field}
                 />
-              </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center rounded-md bg-primary px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-primary/80"
-              >
-                Create Account
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+              </FormControl>
+              <FormDescription>
+                Enter a password with at least 1 uppercase and 1 special
+                character
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirm"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm password</FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="Repeat your password"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>Repeat your password</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   )
 }
 

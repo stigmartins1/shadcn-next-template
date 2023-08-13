@@ -4,7 +4,7 @@ import { Account, Client, ID } from "appwrite"
 type CreateUserAccount = {
   email: string
   password: string
-  name: string
+  username: string
 }
 
 type LoginUserAccount = {
@@ -20,14 +20,14 @@ export const account = new Account(appwriteClient)
 
 export class AppwriteService {
   //create a new record of user inside appwrite
-  async createUserAccount({ email, password, name }: CreateUserAccount) {
+  async createUserAccount({ email, password, username }: CreateUserAccount) {
     try {
       // Register user
       const userAccount = await account.create(
         ID.unique(),
         email,
         password,
-        name
+        username
       )
       if (userAccount) {
         return this.login({ email, password })

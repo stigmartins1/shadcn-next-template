@@ -2,18 +2,22 @@
 
 import React, { FormEvent, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import appwriteService from "@/appwrite/config"
 import useAuth from "@/context/useAuth"
+import { Eye, EyeOff } from "lucide-react"
 
 const Login = () => {
-  const router = useRouter()
   const { setAuthStatus } = useAuth()
+  const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState("")
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
-  const [error, setError] = useState("")
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
 
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -21,7 +25,6 @@ const Login = () => {
       const session = await appwriteService.login(formData)
       if (session) {
         setAuthStatus(true)
-        router.push("/profile")
       }
     } catch (error: any) {
       setError(error.message)
@@ -81,10 +84,10 @@ const Login = () => {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="relative mt-2">
                 <input
                   className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={formData.password}
                   onChange={(e) =>
@@ -96,6 +99,12 @@ const Login = () => {
                   id="password"
                   required
                 />
+                <button
+                  className="absolute inset-y-0 right-0 w-16"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </button>
               </div>
             </div>
             <div>
