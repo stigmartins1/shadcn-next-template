@@ -1,13 +1,14 @@
 "use client"
 
 import React, { useState } from "react"
+import Link from "next/link"
 import appwriteService from "@/appwrite/config"
 import useAuth from "@/context/useAuth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -52,7 +53,6 @@ const formSchema = z
 
 const Signup = () => {
   const [error, setError] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
   const { setAuthStatus } = useAuth()
 
   // 1. Define your form.
@@ -83,83 +83,111 @@ const Signup = () => {
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="m-2 space-y-8 p-2"
-      >
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Displayname</FormLabel>
-              <FormControl>
-                <Input placeholder="Choose a displayname" {...field} />
-              </FormControl>
-              <FormDescription>This is your public displayname</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your email" {...field} />
-              </FormControl>
-              <FormDescription>
-                Enter the email you want to sign up with
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Choose a password"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Enter a password with at least 1 uppercase and 1 special
-                character
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirm"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm password</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Repeat your password"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>Repeat your password</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <div className="flex items-center justify-center">
+      <div className="mx-auto rounded-xl bg-primary-foreground p-10">
+        <div className="mb-2 flex justify-center">
+          <span className="inline-block max-w-[60px]">
+            <img src="/favicon.ico" alt="Logo" />
+          </span>
+        </div>
+        <h2 className="text-center text-2xl font-bold leading-tight">
+          Sign up to create an account
+        </h2>
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="m-2 space-y-8 p-2"
+          >
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Displayname</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Choose a displayname" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public displayname
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your email" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Enter the email you want to sign up with
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Choose a password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    We recommend using a password generator/manager
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirm"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Repeat your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>Repeat your password</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              className={buttonVariants({ size: "wide", variant: "outline" })}
+              type="submit"
+            >
+              Submit
+            </Button>
+            <p className="mt-2 text-center text-base text-gray-600">
+              Already have an account?&nbsp;
+              <Link
+                href="/login"
+                className="font-medium text-primary transition-all duration-200 hover:underline"
+              >
+                Sign In
+              </Link>
+            </p>
+          </form>
+        </Form>
+      </div>
+    </div>
   )
 }
 

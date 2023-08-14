@@ -11,7 +11,7 @@ export default function IndexPage() {
           Your Ultimate Destination for{" "}
           <span className="text-blue-500">
             <Link
-              href={siteConfig.links.smartplaces}
+              href={siteConfig.externalLinks.smartplaces}
               target="_blank"
               rel="noreferrer"
             >
@@ -108,13 +108,13 @@ export default function IndexPage() {
         </div>
         <div className="max-w-[700px] text-lg text-muted-foreground">
           <p className="mt-4">
-            Adventure awaits – start exploring with Smart Places Toolkit today!
+            Adventure awaits - start exploring with Smart Places Toolkit today!
           </p>
         </div>
       </div>
       <div className="flex gap-4">
         <Link
-          href={siteConfig.links.signup}
+          href={siteConfig.internalLinks.signup}
           /* target="_blank" */
           rel="noreferrer"
           className={buttonVariants()}
@@ -122,7 +122,7 @@ export default function IndexPage() {
           Sign Up
         </Link>
         <Link
-          href={siteConfig.links.smartplaces}
+          href={siteConfig.externalLinks.smartplaces}
           target="_blank"
           rel="noreferrer"
           className={buttonVariants()}

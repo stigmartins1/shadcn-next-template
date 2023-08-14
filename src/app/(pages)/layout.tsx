@@ -6,6 +6,7 @@ import { AuthProvider } from "@/context/authContext"
 
 import Blog from "@/components/Blog"
 import Header from "@/components/Header"
+import { SiteHeader } from "@/components/site-header"
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   const [authStatus, setAuthStatus] = useState(false)
@@ -42,7 +43,8 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
               <Blog blur />
             </div>
           </div>
-          {/* <Header /> */}
+          <SiteHeader />
+          {authStatus ? <Header /> : <></>}
           <main className="px-2 py-4">{children}</main>
         </>
       )}

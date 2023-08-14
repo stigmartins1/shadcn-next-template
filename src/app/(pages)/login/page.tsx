@@ -12,7 +12,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (authStatus) {
-      router.push("/dashboard")
+      router.push("/profile")
     }
   })
 

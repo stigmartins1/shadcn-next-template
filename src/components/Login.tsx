@@ -1,28 +1,49 @@
 "use client"
 
-import React, { FormEvent, useState } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import appwriteService from "@/appwrite/config"
 import useAuth from "@/context/useAuth"
-import { Eye, EyeOff } from "lucide-react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+
+import { Button, buttonVariants } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+})
 
 const Login = () => {
-  const { setAuthStatus } = useAuth()
-  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const { setAuthStatus } = useAuth()
+
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   })
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
-
-  const login = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  // 2. Define a submit handler.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    /* console.log(values) */
     try {
-      const session = await appwriteService.login(formData)
+      const session = await appwriteService.login(values)
       if (session) {
         setAuthStatus(true)
       }
@@ -32,91 +53,76 @@ const Login = () => {
   }
 
   return (
-    <div className="flex w-full items-center justify-center">
-      <div className="mx-auto w-full max-w-lg rounded-xl bg-gray-200/50 p-10">
+    <div className="flex items-center justify-center">
+      <div className="mx-auto rounded-xl bg-primary-foreground p-10">
         <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-[60px]">
+          <span className="inline-block max-w-[60px]">
             <img src="/favicon.ico" alt="Logo" />
           </span>
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight text-black">
+        <h2 className="text-center text-2xl font-bold leading-tight">
           Sign in to your account
         </h2>
-        <p className="mt-2 text-center text-base text-gray-600">
-          Don&apos;t have an account yet?&nbsp;
-          <Link
-            href="/signup"
-            className="font-medium text-primary transition-all duration-200 hover:underline"
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="m-2 space-y-8 p-2"
           >
-            Sign Up
-          </Link>
-        </p>
-        {error && <p className="mt-8 text-center text-red-600">{error}</p>}
-        <form onSubmit={login} className="mt-8">
-          <div className="space-y-5">
-            <div>
-              <label
-                htmlFor="email"
-                className="text-base font-medium text-gray-900"
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your email" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Enter your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              className={buttonVariants({ size: "wide", variant: "outline" })}
+              type="submit"
+            >
+              Login
+            </Button>
+            <p className="mt-2 text-center text-base text-gray-600">
+              Don&apos;t have an account yet?&nbsp;
+              <Link
+                href="/signup"
+                className="font-medium text-primary transition-all duration-200 hover:underline"
               >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, email: e.target.value }))
-                  }
-                  placeholder="Email"
-                  id="email"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="text-base font-medium text-gray-900"
-                >
-                  Password
-                </label>
-              </div>
-              <div className="relative mt-2">
-                <input
-                  className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      password: e.target.value,
-                    }))
-                  }
-                  id="password"
-                  required
-                />
-                <button
-                  className="absolute inset-y-0 right-0 w-16"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <EyeOff /> : <Eye />}
-                </button>
-              </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center rounded-md bg-purple-700 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-purple-700/70"
+                Sign Up
+              </Link>
+            </p>
+            <p className="mt-2 text-center text-base text-gray-600">
+              <Link
+                href="/forgotpassword"
+                className="font-medium text-primary transition-all duration-200 hover:underline"
               >
-                Sign in
-              </button>
-            </div>
-          </div>
-        </form>
+                Forgot password?
+              </Link>
+            </p>
+          </form>
+        </Form>
       </div>
     </div>
   )

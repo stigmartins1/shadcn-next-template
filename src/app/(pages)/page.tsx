@@ -3,7 +3,6 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import useAuth from "@/context/useAuth"
 
 import { siteConfig } from "@/config/site"
@@ -12,17 +11,11 @@ import ProfileCard from "@/components/ProfileCard"
 
 const Home = () => {
   const { authStatus } = useAuth()
-  const router = useRouter()
-
-  if (authStatus) {
-    router.replace("/dashboard")
-    return <></>
-  }
   return (
     <div className="mx-auto w-full max-w-7xl px-8">
       <div className="-mx-2 mt-32 flex flex-wrap gap-y-8">
         <div className="flex w-full flex-wrap items-center justify-center px-2 sm:w-1/2">
-          <div className="relative flex w-full flex-wrap justify-center">
+          <div className="flex w-full flex-wrap justify-center">
             {/* <div className="w-full max-w-[100px]">
               <Image src="/favicon.ico" alt="Logo" width={800} height={1347} />
             </div> */}
@@ -38,8 +31,8 @@ const Home = () => {
                   plots, acquire valuable insights and statistics regarding
                   activities within the{" "}
                   <Link
-                    className="hover:underline"
-                    href={siteConfig.links.smartplaces}
+                    className="text-primary hover:text-blue-500 hover:underline"
+                    href={siteConfig.externalLinks.smartplaces}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -49,7 +42,7 @@ const Home = () => {
                 </p>
                 <Link
                   className="hover:underline"
-                  href={siteConfig.links.smartplacesmap}
+                  href={siteConfig.externalLinks.smartplacesmap}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -58,20 +51,15 @@ const Home = () => {
                     alt="Smart Places land plots map"
                     width={1920 / 3}
                     height={890 / 3}
+                    priority
                   />
                 </Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-wrap justify-end px-2 sm:w-1/2">
-          {authStatus ? (
-            <div className="max-w-md">
-              <ProfileCard />
-            </div>
-          ) : (
-            <Login />
-          )}
+        <div className="flex w-full flex-wrap justify-center px-2 sm:w-1/2">
+          {authStatus ? <ProfileCard /> : <Login />}
         </div>
       </div>
     </div>

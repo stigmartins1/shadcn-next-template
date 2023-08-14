@@ -30,13 +30,11 @@ const ProfileCard = () => {
             <div className="relative">
               <p className="mb-1 w-full text-xl font-bold">{user.name}</p>
               <div className="inline-block rounded-md bg-destructive p-0.5 text-[12px] ">
-                <button className="rounded-md px-2 font-bold text-muted-foreground">
-                  FREE
-                </button>
+                <button className="rounded-md px-2 font-bold">FREE</button>
               </div>
             </div>
           </div>
-          <div className="flex w-full flex-wrap gap-y-4 rounded-xl bg-gray-200/70 p-8">
+          <div className="flex w-full flex-wrap gap-y-4 rounded-xl bg-primary-foreground p-8">
             <div className="relative w-full">
               <p className="text-sm text-gray-700">Display Name</p>
               <p className="font-semibold">{user.name}</p>
@@ -46,8 +44,8 @@ const ProfileCard = () => {
               <p className="font-semibold">{user.email}</p>
             </div>
             <div className="relative w-full">
-              <p className="text-sm text-gray-700">Phone Number</p>
-              <p className="font-semibold">999-888-7777</p>
+              <p className="text-sm text-gray-700">Subscription</p>
+              <p className="font-semibold">Free tier</p>
             </div>
             <div className="relative w-full">
               <p className="text-sm text-gray-700">Password</p>

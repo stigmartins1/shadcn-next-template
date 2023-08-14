@@ -10,11 +10,18 @@ export const siteConfig = {
       title: "Home",
       href: "/",
     },
+    { title: "About", href: "/about" },
+    { title: "Contact", href: "/contact" },
   ],
-  links: {
+  internalLinks: {
+    dashboard: "/dashboard",
+    profile: "/profile",
+    signin: "/signin",
+    signup: "/signup",
+  },
+  externalLinks: {
     smartplaces: "https://smart-places.io",
     smartplacesmap: "https://map.smart-places.io",
-    signup: "/signup",
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn/ui",
     docs: "https://ui.shadcn.com",
