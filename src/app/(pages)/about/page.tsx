@@ -18,8 +18,7 @@ export default function IndexPage() {
               Smart Places
             </Link>
           </span>
-          <br className="hidden sm:inline" />
-          Land Plot Insights!
+          <br className="hidden sm:inline" /> Land Plot Insights!
         </h1>
         <div className="max-w-[700px] text-lg text-muted-foreground">
           <p className="mt-4">

@@ -6,6 +6,7 @@ import appwriteService from "@/appwrite/config"
 import useAuth from "@/context/useAuth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import toast, { Toaster } from "react-hot-toast"
 import * as z from "zod"
 
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -20,9 +21,11 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+const notify = () => toast("This account already exist!")
+
 const minUserNameLength = 2
 const maxUserNameLength = 30
-const minPasswordLength = 5
+const minPasswordLength = 8
 const maxPasswordLength = 30
 
 const formSchema = z
@@ -70,15 +73,21 @@ const Signup = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    /* console.log(values) */
     try {
+      // Check if user exist before trying create
       const userData = await appwriteService.createUserAccount(values)
       if (userData) {
         console.log("userData", userData)
         setAuthStatus(true)
+        toast.success("Signup successful!")
       }
     } catch (error: any) {
       setError(error.message)
+      if (error.message.includes("Email already used")) {
+        toast.error("Email already exists")
+      } else {
+        toast.error("An error occurred")
+      }
     }
   }
 

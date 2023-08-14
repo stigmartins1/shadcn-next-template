@@ -35,7 +35,7 @@ export class AppwriteService {
         //any errors will be handled on frontend
         return userAccount
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log("AppwriteService/CreateUserAccount: error =", error)
       throw error
     }
