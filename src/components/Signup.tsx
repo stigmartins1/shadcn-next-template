@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import { InputPassword } from "./ui/inputPassword"
+
 const notify = () => toast("This account already exist!")
 
 const minUserNameLength = 2
@@ -147,7 +149,7 @@ const Signup = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
+                    <InputPassword
                       type="password"
                       placeholder="Choose a password"
                       {...field}
@@ -167,7 +169,7 @@ const Signup = () => {
                 <FormItem>
                   <FormLabel>Confirm password</FormLabel>
                   <FormControl>
-                    <Input
+                    <InputPassword
                       type="password"
                       placeholder="Repeat your password"
                       {...field}

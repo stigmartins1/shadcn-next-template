@@ -47,16 +47,16 @@ export default function Header() {
         </div>
         <div className="hidden space-x-2 lg:block">
           <Link
-            href={authStatus ? "/profile" : "/signup"}
+            href="/admin"
             className="rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-primary hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            {authStatus ? "Profile" : "Sign up"}
+            Admin
           </Link>
           <Link
-            href={authStatus ? "/logout" : "/login"}
+            href="#"
             className="rounded-md border border-primary px-3 py-2 text-sm font-semibold text-primary shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            {authStatus ? "Logout" : "Log In"}
+            Placeholder
           </Link>
         </div>
       </div>

@@ -3,9 +3,10 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import appwriteService from "@/appwrite/config"
-import useAuth from "@/context/useAuth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import axios from "axios"
 import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
 import * as z from "zod"
 
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -17,25 +18,24 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-import { Input } from "./ui/input"
-import { InputPassword } from "./ui/inputPassword"
-
+const minPolicyLength = 56
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  policy: z.string().min(minPolicyLength, {
+    message: `Policy must be ${minPolicyLength} characters`,
+  }),
 })
 
-const Login = () => {
+const Policy = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
-  const { setAuthStatus } = useAuth()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      policy: "",
     },
   })
 
@@ -45,12 +45,19 @@ const Login = () => {
     // ✅ This will be type-safe and validated.
     /* console.log(values) */
     try {
-      const session = await appwriteService.login(values)
-      if (session) {
-        setAuthStatus(true)
-      }
+      console.log(values)
+      setIsLoading(true)
+      const response = await axios.post(
+        "/api/gomaestro/assetpolicy/accounts",
+        values
+      )
+      console.log("Policy send success:", response.data)
+      console.log("response.data =", response.data)
     } catch (error: any) {
-      setError(error.message)
+      console.log("Policy send failed:", error.message)
+      toast.error(error.message)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -63,7 +70,7 @@ const Login = () => {
           </span>
         </div>
         <h2 className="text-center text-2xl font-bold leading-tight">
-          Sign in to your account
+          Retrieve policy accounts info
         </h2>
 
         <Form {...form}>
@@ -73,28 +80,12 @@ const Login = () => {
           >
             <FormField
               control={form.control}
-              name="email"
+              name="policy"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Policy</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your email" {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <InputPassword
-                      type="password"
-                      placeholder="Enter your password"
-                      {...field}
-                    />
+                    <Input placeholder="Enter policy" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,25 +95,8 @@ const Login = () => {
               className={buttonVariants({ size: "wide", variant: "outline" })}
               type="submit"
             >
-              Login
+              Submit
             </Button>
-            <p className="mt-2 text-center text-base text-gray-600">
-              Don&apos;t have an account yet?&nbsp;
-              <Link
-                href="/signup"
-                className="font-medium text-primary transition-all duration-200 hover:underline"
-              >
-                Sign Up
-              </Link>
-            </p>
-            <p className="mt-2 text-center text-base text-gray-600">
-              <Link
-                href="/forgotpassword"
-                className="font-medium text-primary transition-all duration-200 hover:underline"
-              >
-                Forgot password?
-              </Link>
-            </p>
           </form>
         </Form>
       </div>
@@ -130,4 +104,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Policy
