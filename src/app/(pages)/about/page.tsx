@@ -3,10 +3,10 @@ import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 
-export default function IndexPage() {
+export default function AboutPage() {
   return (
-    <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-      <div className="flex max-w-[980px] flex-col items-start gap-2">
+    <section className="container gap-6 pb-8 pt-6 md:py-10">
+      <div className="flex flex-col items-center gap-2">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
           Your Ultimate Destination for{" "}
           <span className="text-blue-500">
@@ -73,7 +73,7 @@ export default function IndexPage() {
           </p>
         </div>
         <h2 className="mt-8 text-2xl font-bold  md:text-3xl">
-          🚀 Personalized Insights Await:
+          🚀 Personalized Insights Await
         </h2>
         <div className="max-w-[700px] text-lg text-muted-foreground">
           <p className="mt-4">
@@ -105,29 +105,14 @@ export default function IndexPage() {
             community like never before.
           </p>
         </div>
-        <div className="max-w-[700px] text-lg text-muted-foreground">
+        <div className="max-w-[700px] text-xl">
           <p className="mt-4">
-            Adventure awaits - start exploring with Smart Places Toolkit today!
+            <Link className="hover:underline" href="/signup">
+              Adventure awaits - start exploring with Smart Places Toolkit
+              today!
+            </Link>
           </p>
         </div>
-      </div>
-      <div className="flex gap-4">
-        <Link
-          href={siteConfig.internalLinks.signup}
-          /* target="_blank" */
-          rel="noreferrer"
-          className={buttonVariants()}
-        >
-          Sign Up
-        </Link>
-        <Link
-          href={siteConfig.externalLinks.smartplaces}
-          target="_blank"
-          rel="noreferrer"
-          className={buttonVariants()}
-        >
-          Visit the Smart Places project
-        </Link>
       </div>
     </section>
   )

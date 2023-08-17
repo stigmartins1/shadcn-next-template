@@ -8,8 +8,8 @@ import Logo from "./Logo"
 
 const menuItems = [
   {
-    name: "Home",
-    href: "/",
+    name: "Dashboard",
+    href: "/dashboard",
   },
   {
     name: "About",

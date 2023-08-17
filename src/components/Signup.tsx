@@ -57,6 +57,7 @@ const formSchema = z
   })
 
 const Signup = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const { setAuthStatus } = useAuth()
 
@@ -76,7 +77,8 @@ const Signup = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      // Check if user exist before trying create
+      setIsLoading(true)
+      // Check if user exist before trying create?
       const userData = await appwriteService.createUserAccount(values)
       if (userData) {
         console.log("userData", userData)
@@ -84,6 +86,7 @@ const Signup = () => {
         toast.success("Signup successful!")
       }
     } catch (error: any) {
+      setIsLoading(false)
       setError(error.message)
       if (error.message.includes("Email already used")) {
         toast.error("Email already exists")

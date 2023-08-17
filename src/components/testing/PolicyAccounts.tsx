@@ -27,7 +27,7 @@ const formSchema = z.object({
   }),
 })
 
-const Policy = () => {
+const PolicyAccounts = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
@@ -52,7 +52,7 @@ const Policy = () => {
         values
       )
       console.log("Policy send success:", response.data)
-      console.log("response.data =", response.data)
+      //console.log("response.data =", response.data)
     } catch (error: any) {
       console.log("Policy send failed:", error.message)
       toast.error(error.message)
@@ -70,7 +70,7 @@ const Policy = () => {
           </span>
         </div>
         <h2 className="text-center text-2xl font-bold leading-tight">
-          Retrieve policy accounts info
+          Policy accounts
         </h2>
 
         <Form {...form}>
@@ -104,4 +104,4 @@ const Policy = () => {
   )
 }
 
-export default Policy
+export default PolicyAccounts
