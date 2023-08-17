@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 
 import AccountAssets from "@/components/testing/AccountAssets"
+import OverviewCombobox from "@/components/testing/OverviewCombobox"
 import PolicyAccounts from "@/components/testing/PolicyAccounts"
 
 const PolicyPage = () => {
@@ -15,7 +16,8 @@ const PolicyPage = () => {
         </Link>
         <span className="text-3xl font-bold">Policy</span>
       </h1>
-      <div className="flex gap-x-4">
+      <div className="my-4 flex gap-x-4">
+        <OverviewCombobox />
         <AccountAssets />
         <PolicyAccounts />
       </div>

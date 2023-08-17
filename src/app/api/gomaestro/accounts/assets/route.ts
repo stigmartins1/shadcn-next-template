@@ -13,13 +13,13 @@ export async function POST(request: NextRequest) {
   const GOMAESTRO_APIKEY = process.env.GOMAESTRO_APIKEY
   const POLICY = process.env.SP_POLICY_ID
   const URL = `${baseUrl}${pathUrl}`
-  let query = `?policy=${POLICY}&count=10`
 
   try {
     console.log(`AssetsByAccount: Entering local Gomaestro API...`)
     const reqBody = await request.json()
-    const { account } = reqBody
-    console.log(`AssetsByAccount: Account = ${account}`)
+    const { account, cursor } = reqBody
+    let query = `?policy=${POLICY}&cursor=${cursor}`
+    console.log(`AssetsByAccount: query = ${query}`)
 
     const config = {
       method: "get",

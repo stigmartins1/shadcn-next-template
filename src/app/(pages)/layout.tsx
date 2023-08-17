@@ -8,7 +8,7 @@ import Blog from "@/components/Blog"
 import Header from "@/components/Header"
 import { SiteHeader } from "@/components/site-header"
 
-const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const [authStatus, setAuthStatus] = useState(false)
   const [loader, setLoader] = useState(true)
 
@@ -52,4 +52,4 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default ProtectedLayout
+export default Layout

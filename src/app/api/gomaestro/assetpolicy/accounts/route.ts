@@ -5,20 +5,24 @@ import { NextRequest, NextResponse } from "next/server"
 import axios from "axios"
 
 export async function POST(request: NextRequest) {
+  const baseUrl = process.env.GOMAESTRO_MAINNET
+  const pathUrl = "/assets/policy"
   const GOMAESTRO_APIKEY = process.env.GOMAESTRO_APIKEY
-  const URL = "https://mainnet.gomaestro-api.org/v1/assets/policy/"
+  const POLICY = process.env.SP_POLICY_ID
+  const URL = `${baseUrl}${pathUrl}`
 
   try {
     console.log(`PolicyAccounts: Entering local Gomaestro API...`)
     const reqBody = await request.json()
-    const { policy } = reqBody
-    console.log(policy)
+    const { cursor } = reqBody
+    let query = `?cursor=${cursor}`
+    console.log(`PolicyAccounts: query = ${query}`)
 
     // https://docs.gomaestro.org/docs/API%20reference/Asset%20Policy/policy-accounts
     const config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `${URL}${policy}/accounts`,
+      url: `${URL}${POLICY}/accounts${query}`,
       headers: {
         Accept: "application/json",
         "api-key": `${GOMAESTRO_APIKEY}`,
