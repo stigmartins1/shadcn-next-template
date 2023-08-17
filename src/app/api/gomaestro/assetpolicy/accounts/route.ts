@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 /* import { sendEmail } from "@/helpers/mailer" */
-import AssetsByAccount from "@/models/AssetsByAccount"
-import { connectToDB } from "@/utils/database"
+//import PolicyAccounts from "@/models/PolicyAccounts"
+//import { connectToDB } from "@/utils/database"
 import axios from "axios"
 
 export async function POST(request: NextRequest) {
@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   const URL = "https://mainnet.gomaestro-api.org/v1/assets/policy/"
 
   try {
-    console.log(`AssetsByAccount: Entering local Gomaestro API...`)
+    console.log(`PolicyAccounts: Entering local Gomaestro API...`)
     const reqBody = await request.json()
     const { policy } = reqBody
     console.log(policy)
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     }
 
     const response = await axios(config)
-    console.log(`AssetsByAccount: Exiting local Gomaestro API`)
+    console.log(`PolicyAccounts: Exiting local Gomaestro API`)
     return NextResponse.json(response.data)
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
