@@ -18,7 +18,8 @@ export async function POST(request: NextRequest) {
     console.log(`AssetsByAccount: Entering local Gomaestro API...`)
     const reqBody = await request.json()
     const { account, cursor } = reqBody
-    let query = `?policy=${POLICY}&cursor=${cursor}`
+    let query = `?policy=${POLICY}`
+    cursor ? (query += `&cursor=${cursor}`) : null
     console.log(`AssetsByAccount: query = ${query}`)
 
     const config = {

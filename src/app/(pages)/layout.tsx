@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react"
 import appwriteService from "@/appwrite/config"
 import { AuthProvider } from "@/context/authContext"
+import axios from "axios"
+import { SWRConfig } from "swr"
 
 import Blog from "@/components/Blog"
 import Header from "@/components/Header"
@@ -20,35 +22,39 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <AuthProvider value={{ authStatus, setAuthStatus }}>
-      {!loader && (
-        <>
-          <div className="text-primary">
-            <div className="fixed left-1/3 top-2/3 z-[-1] w-12 blur-2xl">
-              <Blog blur />
+    <SWRConfig
+      value={{ fetcher: (url) => axios.get(url).then((res) => res.data) }}
+    >
+      <AuthProvider value={{ authStatus, setAuthStatus }}>
+        {!loader && (
+          <>
+            <div className="text-primary">
+              <div className="fixed left-1/3 top-2/3 z-[-1] w-12 blur-2xl">
+                <Blog blur />
+              </div>
+              <div className="fixed left-2/3 top-1/3 z-[-1] w-12 blur-2xl">
+                <Blog blur />
+              </div>
+              <div className="fixed left-1/4 top-1/4 z-[-1] w-40 opacity-50 blur-2xl">
+                <Blog blur />
+              </div>
+              <div className="fixed left-1/2 top-1/2 z-[-1] w-32 opacity-60 blur-2xl">
+                <Blog blur />
+              </div>
+              <div className="fixed left-[45%] top-1/3 z-[-1] w-12 blur-2xl">
+                <Blog blur />
+              </div>
+              <div className="fixed left-3/4 top-1/3 z-[-1] w-60 opacity-20 blur-2xl">
+                <Blog blur />
+              </div>
             </div>
-            <div className="fixed left-2/3 top-1/3 z-[-1] w-12 blur-2xl">
-              <Blog blur />
-            </div>
-            <div className="fixed left-1/4 top-1/4 z-[-1] w-40 opacity-50 blur-2xl">
-              <Blog blur />
-            </div>
-            <div className="fixed left-1/2 top-1/2 z-[-1] w-32 opacity-60 blur-2xl">
-              <Blog blur />
-            </div>
-            <div className="fixed left-[45%] top-1/3 z-[-1] w-12 blur-2xl">
-              <Blog blur />
-            </div>
-            <div className="fixed left-3/4 top-1/3 z-[-1] w-60 opacity-20 blur-2xl">
-              <Blog blur />
-            </div>
-          </div>
-          <SiteHeader />
-          {authStatus ? <Header /> : <></>}
-          <main className="px-2 py-4">{children}</main>
-        </>
-      )}
-    </AuthProvider>
+            <SiteHeader />
+            {authStatus ? <Header /> : <></>}
+            <main className="px-2 py-4">{children}</main>
+          </>
+        )}
+      </AuthProvider>
+    </SWRConfig>
   )
 }
 

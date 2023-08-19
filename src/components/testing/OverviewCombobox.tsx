@@ -3,7 +3,6 @@
 import * as React from "react"
 import { RxCaretSort, RxCheck, RxPlusCircled } from "react-icons/rx"
 
-import useRequest from "@/lib/useRequests"
 import { cn } from "@/lib/utils"
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
@@ -69,10 +68,6 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 interface OverviewComboboxProps extends PopoverTriggerProps {}
 
 export default function OverviewCombobox({ className }: OverviewComboboxProps) {
-  const { data, error, isValidating } = useRequest<string[]>({
-    url: "/api/gomaestro/assetpolicy/accounts",
-  })
-
   const [open, setOpen] = React.useState(false)
   const [showNewAccountDialog, setShowNewAccountDialog] = React.useState(false)
   const [selectedAccount, setSelectedAccount] = React.useState<Account>(

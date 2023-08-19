@@ -1,3 +1,6 @@
+// https://docs.gomaestro.org/docs/API%20reference/Asset%20Policy/policy-accounts
+// Returns stake addresses for accounts which hold assets
+// of the given policy ID with the asset names and amounts
 import { NextRequest, NextResponse } from "next/server"
 /* import { sendEmail } from "@/helpers/mailer" */
 //import PolicyAccounts from "@/models/PolicyAccounts"

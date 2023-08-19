@@ -48,5 +48,6 @@ const getLimiter = (config: any) => {
 
 module.exports = {
   RATE_LIMITER_BLOCKFROST,
+  RATE_LIMITER_GOMAESTRO,
   getLimiter,
 }
