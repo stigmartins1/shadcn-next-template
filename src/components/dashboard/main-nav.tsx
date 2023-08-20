@@ -21,13 +21,13 @@ export function MainNav({
         href="/dashboard"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Customers
+        Manage Plots
       </Link>
       <Link
         href="/dashboard"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Products
+        Businesses
       </Link>
       <Link
         href="/dashboard/settings"

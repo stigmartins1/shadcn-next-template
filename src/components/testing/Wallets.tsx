@@ -1,7 +1,9 @@
 "use client"
 
 import * as React from "react"
+import axios from "axios"
 import { RxCaretSort, RxCheck, RxPlusCircled } from "react-icons/rx"
+import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite"
 
 import { cn } from "@/lib/utils"
 
@@ -36,18 +38,36 @@ import {
   SelectValue,
 } from "../ui/select"
 
-const groups = [
+const fetcher = (url: any) => axios.get(url).then((res) => res.data)
+// Default count is 100 per page
+const PAGES = 1
+const getKeyPolicyAccounts: SWRInfiniteKeyLoader = (
+  pageIndex,
+  previousPageData
+) => {
+  console.log("pageIndex =", pageIndex)
+  // reached the end
+  if (previousPageData && previousPageData.next_cursor === null) return null
+
+  // first page, we don't have `previousPageData`
+  if (pageIndex === 0) return `/api/gomaestro/assetpolicy/accounts`
+
+  // add the cursor to the API endpoint
+  return `/api/gomaestro/assetpolicy/accounts?cursor=${previousPageData.next_cursor}`
+}
+
+const wallets = [
   {
-    label: "Personal Account",
+    label: "Personal Wallets",
     accounts: [
       {
-        label: "Alicia Koch",
-        value: "personal",
+        label: "All My Wallets",
+        value: [],
       },
     ],
   },
   {
-    label: "Accounts",
+    label: "Other Wallets",
     accounts: [
       {
         label: "Acme Inc.",
@@ -61,17 +81,22 @@ const groups = [
   },
 ]
 
-type Account = (typeof groups)[number]["accounts"][number]
+type Account = (typeof wallets)[number]["accounts"][number]
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
-interface OverviewComboboxProps extends PopoverTriggerProps {}
+interface WalletsProps extends PopoverTriggerProps {}
 
-export default function OverviewCombobox({ className }: OverviewComboboxProps) {
+export default function Wallets({ className }: WalletsProps) {
+  const { data, error, isLoading, isValidating, mutate, size, setSize } =
+    useSWRInfinite(getKeyPolicyAccounts, fetcher, {
+      initialSize: PAGES,
+      revalidateIfStale: true,
+    })
   const [open, setOpen] = React.useState(false)
   const [showNewAccountDialog, setShowNewAccountDialog] = React.useState(false)
   const [selectedAccount, setSelectedAccount] = React.useState<Account>(
-    groups[0].accounts[0]
+    wallets[0].accounts[0]
   )
 
   return (
@@ -99,11 +124,11 @@ export default function OverviewCombobox({ className }: OverviewComboboxProps) {
         <PopoverContent className="w-[200px] p-0">
           <Command>
             <CommandList>
-              <CommandInput placeholder="Search accounts..." />
+              <CommandInput placeholder="Search for wallet..." />
               <CommandEmpty>No team found.</CommandEmpty>
-              {groups.map((group) => (
-                <CommandGroup key={group.label} heading={group.label}>
-                  {group.accounts.map((team) => (
+              {wallets.map((wallet) => (
+                <CommandGroup key={wallet.label} heading={wallet.label}>
+                  {wallet.accounts.map((team) => (
                     <CommandItem
                       key={team.value}
                       onSelect={() => {

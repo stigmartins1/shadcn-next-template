@@ -3,12 +3,12 @@
 
 import { NextRequest, NextResponse } from "next/server"
 //import { sendEmail } from "@/helpers/mailer"
-//import AssetsByPolicy from "@/models/AssetsByPolicy"
+//import PolicyAssets from "@/models/PolicyAssets"
 //import { connectToDB } from "@/utils/database"
 import axios from "axios"
 
 export async function GET(request: NextRequest) {
-  console.log(`AssetsByPolicy: Entering local Maestro API...`)
+  console.log(`PolicyAssets: Entering local Maestro API...`)
   const baseUrl = process.env.GOMAESTRO_MAINNET
   const pathUrl = "/assets/policy"
   const GOMAESTRO_APIKEY = process.env.GOMAESTRO_APIKEY
@@ -18,11 +18,9 @@ export async function GET(request: NextRequest) {
   try {
     const nextUrl = request.nextUrl
     const queryParams = new URLSearchParams(nextUrl.search)
-    const cursor = queryParams.get("cursor")
-    console.log(`AssetsByPolicy: cursor = ${cursor}`)
-
-    let query = cursor ? `?cursor=${cursor}` : ""
-    console.log(`AssetsByPolicy: query = ${query}`)
+    console.log(`PolicyAssets: queryParams = ${queryParams}`)
+    const query = String(queryParams) !== "" ? `?${queryParams}` : ""
+    console.log(`PolicyAssets: query = ${query}`)
 
     const config = {
       method: "get",
@@ -34,10 +32,10 @@ export async function GET(request: NextRequest) {
       },
     }
 
-    console.log(`AssetsByPolicy: Axios config.url = ${config.url}`)
+    console.log(`PolicyAssets: Axios config.url = ${config.url}`)
 
     const response = await axios(config)
-    console.log(`AssetsByPolicy: Exiting local Gomaestro API`)
+    console.log(`PolicyAssets: Exiting local Gomaestro API`)
     return NextResponse.json(response.data)
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
