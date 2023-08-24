@@ -64,20 +64,15 @@ const wallets = [
         label: "All My Wallets",
         value: [],
       },
+      {
+        label: "Individual Wallet",
+        value: "",
+      },
     ],
   },
   {
-    label: "Other Wallets",
-    accounts: [
-      {
-        label: "Acme Inc.",
-        value: "acme-inc",
-      },
-      {
-        label: "Monsters Inc.",
-        value: "monsters",
-      },
-    ],
+    label: "All Plot Wallets",
+    accounts: [],
   },
 ]
 
@@ -88,16 +83,35 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 interface WalletsProps extends PopoverTriggerProps {}
 
 export default function Wallets({ className }: WalletsProps) {
-  const { data, error, isLoading, isValidating, mutate, size, setSize } =
-    useSWRInfinite(getKeyPolicyAccounts, fetcher, {
-      initialSize: PAGES,
-      revalidateIfStale: true,
-    })
+  const {
+    data: pages,
+    error,
+    isLoading,
+    isValidating,
+    mutate,
+    size,
+    setSize,
+  } = useSWRInfinite(getKeyPolicyAccounts, fetcher, {
+    initialSize: PAGES,
+    revalidateIfStale: true,
+  })
   const [open, setOpen] = React.useState(false)
   const [showNewAccountDialog, setShowNewAccountDialog] = React.useState(false)
   const [selectedAccount, setSelectedAccount] = React.useState<Account>(
     wallets[0].accounts[0]
   )
+  let walletCount = 0
+  if (pages) {
+    pages.map((page) => {
+      page.data.map((account: any) => {
+        walletCount++
+        wallets[1].accounts.push({
+          label: account.account,
+          value: account.account,
+        })
+      })
+    })
+  }
 
   return (
     <Dialog open={showNewAccountDialog} onOpenChange={setShowNewAccountDialog}>
@@ -107,7 +121,7 @@ export default function Wallets({ className }: WalletsProps) {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            aria-label="Select a team"
+            aria-label="Select a wallet"
             className={cn("w-[200px] justify-between", className)}
           >
             <Avatar className="mr-2 h-5 w-5">
@@ -125,31 +139,34 @@ export default function Wallets({ className }: WalletsProps) {
           <Command>
             <CommandList>
               <CommandInput placeholder="Search for wallet..." />
-              <CommandEmpty>No team found.</CommandEmpty>
+              <CommandEmpty>No wallet found.</CommandEmpty>
               {wallets.map((wallet) => (
-                <CommandGroup key={wallet.label} heading={wallet.label}>
-                  {wallet.accounts.map((team) => (
+                <CommandGroup
+                  key={wallet.label}
+                  heading={wallet.label + " (" + walletCount + ")"}
+                >
+                  {wallet.accounts.map((wallet) => (
                     <CommandItem
-                      key={team.value}
+                      key={wallet.value}
                       onSelect={() => {
-                        setSelectedAccount(team)
+                        setSelectedAccount(wallet)
                         setOpen(false)
                       }}
                       className="text-sm"
                     >
                       <Avatar className="mr-2 h-5 w-5">
                         <AvatarImage
-                          src={`https://avatar.vercel.sh/${team.value}.png`}
-                          alt={team.label}
+                          src={`https://avatar.vercel.sh/${wallet.value}.png`}
+                          alt={wallet.label}
                           className="grayscale"
                         />
                         <AvatarFallback>SC</AvatarFallback>
                       </Avatar>
-                      {team.label}
+                      {wallet.label}
                       <RxCheck
                         className={cn(
                           "ml-auto h-4 w-4",
-                          selectedAccount.value === team.value
+                          selectedAccount.value === wallet.value
                             ? "opacity-100"
                             : "opacity-0"
                         )}
@@ -180,9 +197,9 @@ export default function Wallets({ className }: WalletsProps) {
       </Popover>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create team</DialogTitle>
+          <DialogTitle>Create wallet</DialogTitle>
           <DialogDescription>
-            Add a new team to manage products and customers.
+            Add a new wallet to manage products and customers.
           </DialogDescription>
         </DialogHeader>
         <div>

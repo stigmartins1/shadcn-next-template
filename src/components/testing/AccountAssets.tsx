@@ -47,9 +47,8 @@ const AccountAssets = () => {
     try {
       console.log(values)
       setIsLoading(true)
-      const response = await axios.post(
-        "/api/gomaestro/accounts/assets",
-        values
+      const response = await axios.get(
+        `/api/gomaestro/accounts/assets?account=${values.account}`
       )
       console.log("Account send success:", response.data)
       //console.log("response.data =", response.data)

@@ -7,7 +7,8 @@ import { NextRequest, NextResponse } from "next/server"
 //import { connectToDB } from "@/utils/database"
 import axios from "axios"
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
+  console.log(`AccountAssets: Entering local Maestro API...`)
   const baseUrl = process.env.GOMAESTRO_MAINNET
   const pathUrl = "/accounts"
   const GOMAESTRO_APIKEY = process.env.GOMAESTRO_APIKEY
@@ -15,12 +16,14 @@ export async function POST(request: NextRequest) {
   const URL = `${baseUrl}${pathUrl}`
 
   try {
-    console.log(`AssetsByAccount: Entering local Gomaestro API...`)
-    const reqBody = await request.json()
-    const { account, cursor } = reqBody
+    const nextUrl = request.nextUrl
+    const queryParams = new URLSearchParams(nextUrl.search)
+    console.log(`AccountAssets: queryParams = ${queryParams}`)
+    const account = queryParams.get("account")
+    const cursor = queryParams.get("cursor")
     let query = `?policy=${POLICY}`
-    cursor ? (query += `&cursor=${cursor}`) : null
-    console.log(`AssetsByAccount: query = ${query}`)
+    query += cursor !== null ? `&cursor=${cursor}` : ""
+    console.log(`AccountAssets: query = ${query}`)
 
     const config = {
       method: "get",
@@ -32,10 +35,10 @@ export async function POST(request: NextRequest) {
       },
     }
 
-    console.log(`AssetsByAccount: Axios config.url = ${config.url}`)
+    console.log(`AccountAssets: Axios config.url = ${config.url}`)
 
     const response = await axios(config)
-    console.log(`AssetsByAccount: Exiting local Gomaestro API`)
+    console.log(`AccountAssets: Exiting local Gomaestro API`)
     return NextResponse.json(response.data)
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
